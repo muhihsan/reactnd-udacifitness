@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import { getMetricMetaInfo } from '../utils/helpers';
 import UdaciSlider from './UdaciSlider';
 import UdaciStepper from './UdaciSteppers';
+import DateHeader from './DateHeader';
 
 export default class AddEntry extends Component {
   state = {
@@ -27,7 +28,7 @@ export default class AddEntry extends Component {
 
   decrement = (metric) => {
     this.setState((state) => {
-      const count = state[metric] -  getMetricMetaInfo(metric).step;
+      const count = state[metric] - getMetricMetaInfo(metric).step;
       return {
         ...state,
         [metric]: count < 0 ? 0 : count
@@ -45,6 +46,7 @@ export default class AddEntry extends Component {
     const metaInfo = getMetricMetaInfo();
     return (
       <View>
+        <DateHeader date={(new Date()).toLocaleDateString()} />
         {Object.keys(metaInfo).map((key) => {
           const { getIcon, type, ...rest } = metaInfo[key];
           const value = this.state[key];
@@ -54,16 +56,16 @@ export default class AddEntry extends Component {
               {getIcon()}
               {type === 'slider'
                 ? <UdaciSlider
-                    value={value}
-                    onChange={(value) => this.slide(key, value)}
-                    {...rest}
-                  />
+                  value={value}
+                  onChange={(value) => this.slide(key, value)}
+                  {...rest}
+                />
                 : <UdaciStepper
-                    value={value}
-                    onIncrement={() => this.increment(key)}
-                    onDecrement={() => this.decrement(key)}
-                    {...rest}
-                  />}
+                  value={value}
+                  onIncrement={() => this.increment(key)}
+                  onDecrement={() => this.decrement(key)}
+                  {...rest}
+                />}
             </View>
           )
         })}
