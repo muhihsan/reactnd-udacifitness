@@ -8,7 +8,7 @@ import UdaciFitnessCalendar from 'udacifitness-calendar';
 import { white } from '../utils/colors';
 import DateHeader from './DateHeader';
 import MetricCard from './MetricCard';
-import { Apploading, AppLoading } from 'expo';
+import { AppLoading } from 'expo';
 
 class History extends Component {
   state = {
@@ -66,9 +66,9 @@ class History extends Component {
     const { entries } = this.props;
     const { ready } = this.state;
 
-    if (!ready) {
-      return <AppLoading />
-    }
+    // if (!ready) {
+    //   return <AppLoading />
+    // }
 
     return (
       <UdaciFitnessCalendar
