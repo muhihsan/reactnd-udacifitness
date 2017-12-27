@@ -8,7 +8,7 @@ import { calculateDirection } from '../utils/helpers';
 export default class Live extends Component {
   state = {
     coods: null,
-    status: null,
+    status: 'undetermined',
     direction: ''
   }
 
@@ -21,24 +21,26 @@ export default class Live extends Component {
 
         this.setState(() => ({ status }))
       })
-      .catch((error) => {
-        console.warn('Error getting Location permission: ', error);
-        this.setState(() => ({ status: 'undetermined' }));
-      });
+      .catch((error) => this.setState(() => ({ status: 'undetermined' })));
   }
 
-  askPermission = () => {
-    Permissions.askAsync(Permissions.LOCATION)
-      .then(({ status }) => {
-        if (status === 'granted') {
-          return this.setLocation();
-        }
+  askPermission = async () => {
+    // Permissions.askAsync(Permissions.LOCATION)
+    //   .then(({ status }) => {
+    //     if (status === 'granted') {
+    //       return this.setLocation();
+    //     }
 
-        this.setState(() => ({ status }));
-      })
-      .catch((error) => {
-        console.warn('Error asking Location permission: ', error);
-      })
+    //     this.setState(() => ({ status }));
+    //   })
+    //   .catch((error) => console.warn('Error asking Location permission: ', error));
+
+    let { status } = await Permissions.askAsync(Permissions.LOCATION);
+    if (status === 'granted') {
+      return this.setLocation();
+    }
+
+    this.setState(() => ({ status }));
   }
 
   setLocation = () => {
