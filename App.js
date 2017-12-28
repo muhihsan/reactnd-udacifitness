@@ -40,7 +40,7 @@ const Tabs = TabNavigator({
     screen: Live,
     navigationOptions: {
       tabBarLabel: 'Live',
-      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-spedometer' size={30} color={tintColor} />
+      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-speedometer' size={30} color={tintColor} />
     }
   }
 }, {

@@ -17,21 +17,15 @@ class History extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
-    // fetchCalendarResults()
-    //   .then((entries) => dispatch(receiveEntries(entries)))
-    //   .then(({ entries }) => {
-    //     if (!entries[timeToString()]) {
-    dispatch(addEntry({
-      [timeToString()]: getDailyReminderValue()
-    }));
-    // }
-    // })
-    // .then(() => this.setState(() => {
-    //   ready: true
-    // }));
-    this.setState(() => {
-      ready: true
-    });
+    fetchCalendarResults()
+      .then((entries) => dispatch(receiveEntries(entries)))
+      .then(({ entries }) => {
+        if (!entries[timeToString()]) {
+        }
+      })
+      .then(() => this.setState(() => {
+        ready: true
+      }));
   }
 
   renderItem = ({ today, ...metrics }, formattedDate, key) => {
