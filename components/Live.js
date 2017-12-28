@@ -21,26 +21,25 @@ export default class Live extends Component {
 
         this.setState(() => ({ status }))
       })
-      .catch((error) => this.setState(() => ({ status: 'undetermined' })));
+      .catch((error) => {
+        this.setState(() => ({ status: 'undetermined' }));
+        return error;
+      });
   }
 
   askPermission = async () => {
-    // Permissions.askAsync(Permissions.LOCATION)
-    //   .then(({ status }) => {
-    //     if (status === 'granted') {
-    //       return this.setLocation();
-    //     }
+    Permissions.askAsync(Permissions.LOCATION)
+      .then(({ status }) => {
+        if (status === 'granted') {
+          return this.setLocation();
+        }
 
-    //     this.setState(() => ({ status }));
-    //   })
-    //   .catch((error) => console.warn('Error asking Location permission: ', error));
-
-    let { status } = await Permissions.askAsync(Permissions.LOCATION);
-    if (status === 'granted') {
-      return this.setLocation();
-    }
-
-    this.setState(() => ({ status }));
+        this.setState(() => ({ status }));
+      })
+      .catch((error) => {
+        console.warn('Error asking Location permission: ', error);
+        return error;
+      });
   }
 
   setLocation = () => {
